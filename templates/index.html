@@ -1,0 +1,63 @@
+{% extends "bootstrap/base.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+
+{% block title %}Movie Picker Supreme{% endblock %}
+
+{% block navbar %}
+<div class="navbar navbar-fixed-top">
+  <!-- ... -->
+</div>
+{% endblock %}
+
+{% block content %}
+
+<div class="container">
+  <div class="jumbotron text-center">
+    <h1>Movies Supreme <br>
+      <small><a href="{{url_for('movies')}}">All Movies!</a></small>
+    </h1>
+  </div>
+  {% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <div class="alert alert-success" role="alert">
+              <ul>
+                {% for message in messages %}
+                  <li>{{ message }}</li>
+                {% endfor %}
+              </ul>
+            </div>
+        </div>
+    </div>
+
+  {% endif %}
+  {% endwith %}
+  <div class="row">
+    <div class="col-md-2"></div>
+    <div class="col-md-8">
+      <form action="" method="GET" role="form">
+        <legend>Search Movies</legend>
+        <div class="form-group">
+          <label for="">Movie Name</label>
+          <input type="text" class="form-control" id="movie_name" name="movie_name" placeholder="Mad Max :P">
+        </div>
+        <button type="submit" class="btn btn-primary">Search</button>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        {%if movie_name%}
+        <div class="alert alert-warning" role="alert">
+          Before selecting your movie make sure to click on them to check in the <b>IMDB webpage</b> that it is the actual movie you want. Also make sure to select your name in the droplist before submitting, if not then Chace might end up with many movies :p.
+        </div>
+          {{ wtf.quick_form(form) }}
+        {%endif%}
+      </div>
+  </div>
+</div>
+{% endblock %}

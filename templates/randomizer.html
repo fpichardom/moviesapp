@@ -1,0 +1,60 @@
+{% extends "index.html" %}
+{% import 'bootstrap/wtf.html' as wtf %}
+
+{% block title %}Movies List{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <div class="jumbotron">
+        <h1>
+            The Randomizer <br>
+            <small><a href="/movies">Back to Movies</a></small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <div class="col-md-8">
+                        <div class="alert alert-success" role="alert">
+                        <ul>
+                            {% for message in messages %}
+                            <li>{{ message }}</li>
+                            {% endfor %}
+                        </ul>
+                        </div>
+                    </div>
+                </div>
+            {% endif %}
+            {% endwith %}
+            <img src="{{current_movie.cover_url}}" class="img-responsive center-block" alt="Image">
+            <h3>{{current_movie.title}} ({{current_movie.year}})</h3>
+            <p>
+                {% for user in current_movie.users%}
+                <b>{{user.username}}</b>
+                {%endfor%}
+            </p>
+            <p>{{current_movie.plot}}</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-4">
+            <p><b>Total Number of randomizations left: {{randomization_trials}}</b></p>
+        </div>
+        <div class="col-md-4">
+            <form action="{{url_for('randomize')}}" method="POST" role="form">
+                {{ form.hidden_tag() }}
+                {{ wtf.form_errors(form, hiddens="only") }}
+                {{ wtf.form_field(form.user) }}
+                {{ wtf.form_field(form.password) }}
+                <div class="form-group">
+                    <button type="submit" class="btn btn-primary">Randomize</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

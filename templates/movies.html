@@ -1,0 +1,38 @@
+{% extends "index.html" %}
+
+{% block title %}Movies List{% endblock %}
+
+{% block content %}
+<div class="container text-center">
+    <div class="jumbotron">
+        <h1>
+            Movies Supreme <br>
+            <small><a href="/">Back to Movie Picker</a></small> <br>
+            <small><a href="/randomizer">The Randomizer</a></small>
+        </h1>
+    </div>
+    <div class="row">
+        <div class="col-md-2"></div>
+        <div class="col-md-8">
+            <h2>Here are all the Movies so far:</h2>
+        </div>
+    </div>
+    {% for movie in all_movies %}
+    <div class="row">
+        <div class="col-md-4">
+            <img src="{{movie.cover_url}}" class="img-responsive center-block" alt="Image">
+
+            <p>
+                {% for user in movie.users%}
+                <b>{{user.username}}</b>
+                {%endfor%}
+            </p>
+        </div>
+        <div class="col-md-8">
+            <h3>{{movie.title}} ({{movie.year}})</h3>
+            <p>{{movie.plot}}</p>
+        </div>
+    </div>
+    {%endfor%}
+</div>
+{%endblock%}
